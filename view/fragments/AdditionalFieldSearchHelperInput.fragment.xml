@@ -1,0 +1,28 @@
+<!--
+
+    Copyright (C) 2009-2017 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<Label required="{local>Required}" visible="true" text="{local>FieldLabel}" labelFor="addFieldSearchHelpInput"/>
+	<Input id="addFieldSearchHelpInput"
+		enabled="{formatter:'.formatter.isGroupEnabled', parts: [ { path: 'StartDate' }, { path: 'AbsenceTypeCode' } ]}" value="{local>value}"
+		showValueHelp="true" valueHelpRequest="onSearchHelperRequest">
+		<customData>
+			<!-- Collection to search over -->
+			<core:CustomData key="helperCollection" value="{local>F4EntityName}"/>
+			<!-- What values of the collection item should be redered as list title/description of the helper dialog -->
+			<core:CustomData key="helperCollectionTitleField" value="{local>F4EntityTitleField}"/>
+			<core:CustomData key="helperCollectionDescriptionField" value="{local>F4EntityDescriptionField}"/>
+			<!-- On which fields the search should be made -->
+			<core:CustomData key="helperCollectionFilterFields" value="{local>F4SearchFilter}"/>
+			<!-- Dialog i18n -->
+			<core:CustomData key="helperNoDataFoundText"
+				value="{ formatter: 'jQuery.sap.formatMessage', parts: [ 'i18n>searchHelperDataNotFound', 'local>FieldLabel' ] }"/>
+			<core:CustomData key="helperTitleText"
+				value="{ formatter: 'jQuery.sap.formatMessage', parts: [ 'i18n>searchHelperTitle', 'local>FieldLabel' ] }"/>
+			<!-- value of the field that will go into {local>value} after search dialog is closed -->
+			<core:CustomData key="helperFieldToValueAfterSelection" value="{local>additionalFieldKey}"/>
+		</customData>
+	</Input>
+</core:FragmentDefinition>

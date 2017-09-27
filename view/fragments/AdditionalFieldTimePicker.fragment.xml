@@ -1,0 +1,11 @@
+<!--
+
+    Copyright (C) 2009-2017 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<Label required="{local>Required}" visible="true" text="{local>FieldLabel}"/>
+	<TimePicker enabled="{formatter:'.formatter.isGroupEnabled', parts: [ { path: 'StartDate' }, { path: 'AbsenceTypeCode' } ]}"
+		displayFormat="{ path: 'local>/shortDisplayFormat', formatter:'.formatter.displayTimeShort'}" value="{local>value}" valueFormat="HHmmss"
+		minutesStep="15"/>
+</core:FragmentDefinition>

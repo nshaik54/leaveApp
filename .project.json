@@ -1,0 +1,13 @@
+{
+  "mockpreview": {
+    "mockUri": "",
+    "metadataFilePath": "",
+    "loadJSONFiles": false,
+    "loadCustomRequests": false,
+    "mockRequestsFilePath": ""
+  },
+  "deploy": {
+    "destination": "MCD",
+    "name": "HCMFAB_LEAV_MAN"
+  }
+}

@@ -1,0 +1,12 @@
+<!--
+
+    Copyright (C) 2009-2017 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<Label id="addFieldDatePickerLabel" required="{local>Required}" visible="true" text="{local>FieldLabel}"
+		labelFor="addFieldDatePicker"/>
+	<DatePicker id="addFieldDatePicker"
+		enabled="{formatter:'.formatter.isGroupEnabled', parts: [ { path: 'StartDate' }, { path: 'AbsenceTypeCode' } ]}"
+		value="{ path: 'local>value', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { UTC: true }, constraints: { displayFormat: 'Date' } }"/>
+</core:FragmentDefinition>

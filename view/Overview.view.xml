@@ -1,0 +1,219 @@
+<!--
+
+    Copyright (C) 2009-2017 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<mvc:View controllerName="hcm.fab.myleaverequest.controller.Overview" xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.m.semantic" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:v="sap.ui.comp.variants"
+	xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:u="sap.ui.unified" xmlns:common="hcm.fab.lib.common.controls">
+	<semantic:FullscreenPage navButtonPress="onNavBack" id="page" showSubHeader="true" floatingFooter="true" title="{i18n>appDescription}">
+		<l:ResponsiveFlowLayout>
+			<VBox renderType="Bare">
+				<layoutData>
+					<l:ResponsiveFlowLayoutData minWidth="320"/>
+				</layoutData>
+				<Panel id="entitlementPanel" expandable="true" expanded="{local>/entitlementsExpanded}" headerText="{i18n>entitlementTabTitle}" width="auto"
+					expand="onEntitlementPanelExpand">
+					<Table id="entitlementTable" items="{}" updateFinished="onUpdateFinishedEntitlements" growing="true" growingThreshold="5" inset="false"
+						growingScrollToLoad="false" itemPress="onEntitlementItemPressed">
+						<headerToolbar>
+							<OverflowToolbar>
+								<Title id="entitlementCount" text="{path: 'local>/entCount', formatter: '.formatter.itemCountFormatter'}" titleStyle="Auto" level="Auto"
+									visible="{= !${device>/system/phone}}"/>
+								<ToolbarSpacer/>
+								<Label text="{i18n>showFrom}" visible="{= !${device>/system/phone}}" labelFor="entitlementDatePicker"/>
+								<DatePicker id="entitlementDatePicker" dateValue="{local>/entitlementStartDate}" change="onEntitlementDateChanged" width="10rem"
+									tooltip="{i18n>showEntitlementFrom}"/>
+								<!--Allow adding elements to the entitlement table toolbar -->
+								<core:ExtensionPoint name="entitlementsToolbarExtension"/>
+							</OverflowToolbar>
+						</headerToolbar>
+						<columns>
+							<!-- Leave Type -->
+							<Column id="leaveEntitlementTypeCol">
+								<Text text="{i18n>leaveTypTxt}"/>
+							</Column>
+							<!-- Validity -->
+							<Column id="validFromEntitlementCol" minScreenWidth="Tablet" demandPopin="true" popinDisplay="WithoutHeader">
+								<Text text="{i18n>validityTxt}"/>
+							</Column>
+							<!-- Available Entitlement -->
+							<Column id="availableEntitlementCol" hAlign="{= ${device>/system/phone} ? 'End' : 'Center'}">
+								<Text text="{i18n>availableText}"/>
+							</Column>
+							<!-- Planned Entitlement -->
+							<Column id="plannedEntitlementCol" hAlign="Center" minScreenWidth="Tablet" demandPopin="false">
+								<Text text="{i18n>plannedText}"/>
+							</Column>
+							<!-- Used Entitlement -->
+							<Column id="usedEntitlementCol" hAlign="Center" minScreenWidth="Tablet" demandPopin="false">
+								<Text text="{i18n>usedText}"/>
+							</Column>
+							<!-- Allocated Entitlement -->
+							<Column id="allocatedEntitlementCol" hAlign="Center" minScreenWidth="Tablet" demandPopin="false">
+								<Text text="{i18n>entitlementTxt}"/>
+							</Column>
+							<!--Allow adding columns to the entitlements table -->
+							<core:ExtensionPoint name="entitlementsTableColumnsExtension"/>
+						</columns>
+						<items>
+							<ColumnListItem type="{= ${device>/system/phone} ? 'Navigation' : 'Inactive' }" id="entitlementColumnListItem">
+								<cells>
+									<!-- Leave Type -->
+									<ObjectIdentifier title="{TimeAccountTypeName}" class="sapMTableContentMargin"/>
+									<!-- Validity -->
+									<ObjectAttribute
+										text="{parts:[ {path:'DeductionStartDate', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { style: 'medium'}, constraints: { displayFormat : 'Date' }}, {path:'DeductionEndDate', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { style: 'medium'}, constraints: { displayFormat : 'Date' }} ], formatter:'.formatter.formatTimeAccountValidity'}"
+										class="sapMTableContentMargin"/>
+									<!-- Available Entitlement -->
+									<ObjectNumber class="sapMTableContentMargin" emphasized="true"
+										number="{path:'BalanceAvailableQuantity', type: 'sap.ui.model.odata.type.Double', formatOptions: { maxFractionDigits: 2, minFractionDigits: 0 }}"
+										state="{path:'BalanceAvailableQuantity', formatter:'.formatter.formatEntitlementStatus'}" unit="{TimeUnitName}"/>
+									<!-- Planned Entitlement -->
+									<ObjectNumber class="sapMTableContentMargin" emphasized="false"
+										number="{path:'BalancePlannedQuantity', type: 'sap.ui.model.odata.type.Double', formatOptions: { maxFractionDigits: 2, minFractionDigits: 0 }}"
+										unit="{TimeUnitName}"/>
+									<!-- Used Entitlement -->
+									<ObjectNumber class="sapMTableContentMargin" emphasized="false"
+										number="{path:'BalanceUsedQuantity', type: 'sap.ui.model.odata.type.Double', formatOptions: { maxFractionDigits: 2, minFractionDigits: 0 }}"
+										unit="{TimeUnitName}"/>
+									<!-- Allocated Entitlement -->
+									<ObjectNumber class="sapMTableContentMargin" emphasized="false"
+										number="{path:'BalanceEntitlementQuantity', type: 'sap.ui.model.odata.type.Double', formatOptions: { maxFractionDigits: 2, minFractionDigits: 0 }}"
+										unit="{TimeUnitName}"/>
+									<!--Allow adding cells to the entitlements table -->
+									<core:ExtensionPoint name="entitlementsTableRowsExtension"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</Panel>
+				<Panel id="overviewPanel" expandable="true" expanded="{local>/overviewExpanded}" headerText="{i18n>overviewTabTitle}" width="auto"
+					expand="onOverviewPanelExpand">
+					<OverflowToolbar>
+						<SegmentedButton id="calendarToggleButton" selectedKey="{local>/viewSelection}" select="onSelect"
+							width="{= ${device>/system/phone} ? '8rem' : null }">
+							<items>
+								<SegmentedButtonItem id="btnShowCalendar" icon="sap-icon://calendar" text="{= ${device>/system/phone} ? null : ${i18n>calText}}"
+									key="calendar"/>
+								<SegmentedButtonItem id="btnShowItemList" icon="sap-icon://list" text="{= ${device>/system/phone} ? null : ${local>/overviewCountText}}"
+									key="list"/>
+							</items>
+							<layoutData>
+								<OverflowToolbarLayoutData priority="High"/>
+							</layoutData>
+						</SegmentedButton>
+						<ToolbarSpacer/>
+						<Label text="{i18n>showFrom}" visible="{= !${device>/system/phone}}" labelFor="overviewDatePicker"/>
+						<DatePicker id="overviewDatePicker" width="10rem" dateValue="{local>/leaveRequestStartDate}" change="onStartDateChange"
+							tooltip="{i18n>showLeaveRequestFrom}">
+							<layoutData>
+								<OverflowToolbarLayoutData priority="Low"/>
+							</layoutData>
+						</DatePicker>
+						<!--Allow adding elements to the leave request overview table toolbar -->
+						<core:ExtensionPoint name="overviewToolbarExtension"/>
+					</OverflowToolbar>
+					<!--Leave Request Overview Table -->
+					<Table id="leaveRequestTable" fixedLayout="true" inset="false" items="{}" itemPress="onItemPressed"
+						updateFinished="onUpdateFinishedOverview" growing="{= ${device>/system/desktop} ? false : true }" growingThreshold="15"
+						growingScrollToLoad="{= ${device>/system/desktop} ? false : true }" visible="{= !${local>/showCalendar}}">
+						<columns>
+							<!-- Leave Type -->
+							<Column id="leaveTypeCol" width="{= ${device>/system/phone} ? '68%' : null }">
+								<Text id="leaveTypeColTxt" text="{i18n>leaveTypTxt}"/>
+							</Column>
+							<!-- Validity -->
+							<Column id="validFromCol" minScreenWidth="Desktop" demandPopin="true" popinDisplay="{= ${device>/system/phone} ? 'WithoutHeader' : 'Block'}"
+								hAlign="{= ${device>/system/phone} ? 'End' : 'Begin'}">
+								<Text id="validityColTxt" text="{i18n>validityTxt}"/>
+							</Column>
+							<!-- Status -->
+							<Column id="statusCol" minScreenWidth="Tablet" demandPopin="true" popinDisplay="{= ${device>/system/phone} ? 'WithoutHeader' : 'Block'}"
+								hAlign="{= ${device>/system/phone} ? 'End' : 'Center'}">
+								<Text id="statusColTxt" text="{i18n>status}"/>
+							</Column>
+							<!-- Approver -->
+							<Column id="approverCol" minScreenWidth="Desktop" demandPopin="false">
+								<Text id="approverColTxt" text="{i18n>approverTxt}" class="sapUiMediumMarginBegin"/>
+							</Column>
+							<!-- Quota Used -->
+							<Column id="quotaUsedCol" width="{= ${device>/system/phone} ? '30%' : null }" hAlign="Right">
+								<Text id="quotaUsedColTxt" text="{i18n>quotaUsedTxt}"/>
+							</Column>
+							<!-- Edit Action -->
+							<Column id="editActionCol" minScreenWidth="Tablet" width="3rem" demandPopin="false" hAlign="{= ${device>/system/phone} ? 'End' : 'Begin'}">
+								<Text id="editActionColText" text="{i18n>editActionText}" visible="false"/>
+							</Column>
+							<!-- Delete Action -->
+							<Column id="deleteActionCol" minScreenWidth="Tablet" width="3rem" demandPopin="false" hAlign="{= ${device>/system/phone} ? 'End' : 'Begin'}">
+								<Text id="deleteActionColText" text="{i18n>deleteActionText}" visible="false"/>
+							</Column>
+							<!--Allow adding columns to the leave request overview table -->
+							<core:ExtensionPoint name="overviewTableColumnsExtension"/>
+						</columns>
+						<items>
+							<ColumnListItem type="Navigation" id="leaveRequestColumnListItem">
+								<cells>
+									<!-- Leave Type -->
+									<ObjectIdentifier id="leaveTypeCell" title="{AbsenceTypeName}" class="sapMTableContentMargin"/>
+									<!-- Validity -->
+									<ObjectAttribute id="validityCell"
+										text="{parts:[ {path:'StartDate', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { style: 'medium' }, constraints: { displayFormat : 'Date' }}, {path:'EndDate', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { style: 'medium' }, constraints: { displayFormat : 'Date' }} ], formatter:'.formatter.formatOverviewLeaveDates'}"
+										class="sapMTableContentMargin"/>
+									<!-- Status -->
+									<ObjectStatus id="statusCell" text="{StatusTxt}" state="{path:'StatusID', formatter:'.formatter.statusFormatter'}"
+										class="sapMTableContentMargin"/>
+									<!-- Approver -->
+									<ObjectAttribute id="approverCell" text="{ApproverLvl1/Name}" class="sapMTableContentMargin sapUiMediumMarginBegin"/>
+									<!-- Quota Used -->
+									<ObjectNumber id="quotaUsedCell" class="sapMTableContentMargin sapUiLargeMarginEnd" emphasized="true"
+										number="{path:'QuotaUsed', type: 'sap.ui.model.odata.type.Double', formatOptions: { maxFractionDigits: 5, minFractionDigits: 0 }, formatter:'.formatter.formatUsedQuota'}"
+										unit="{= ${QuotaUsed} === '0' ? null : ${TimeUnitTxt}}"/>
+									<!-- Edit Action -->
+									<Button id="editBtn" icon="sap-icon://edit" press="onEditPress" visible="{IsModifiable}" type="Transparent" tooltip="{i18n>editViewTitle}"/>
+									<!-- Delete Action -->
+									<Button id="deleteBtn" icon="sap-icon://sys-cancel" press="onDeletePress" visible="{IsDeletable}" type="Transparent"
+										tooltip="{i18n>deleteLeaveRequest}"/>
+									<!--Allow adding cells to the leave request overview table -->
+									<core:ExtensionPoint name="overviewTableCellsExtension"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+						<swipeContent>
+							<Button text="{i18n>withdrawTxt}" type="Reject" press="onDeleteSwipe"/>
+						</swipeContent>
+					</Table>
+					<!--Leave Request Overview Calendar -->
+					<MessageStrip id="calendarHintStrip" text="{i18n>calendarHint}" type="Information" showIcon="true" tooltip="{i18n>calendarHint}"
+						class="sapUiSmallMarginTopBottom" visible="{local>/showCalendar}"/>
+					<u:Calendar id="calendar" width="100%" months="2" intervalSelection="true" legend="legend" visible="{local>/showCalendar}"
+						select="onDateSelect" busy="{= ${local>/showCalendar} &amp;&amp; ${local>/calendarBusy}}"/>
+					<u:CalendarLegend id="legend" visible="{local>/showCalendar}" columnWidth="160px">
+						<u:items>
+							<u:CalendarLegendItem
+								text="{parts:[{path: 'i18n>statusConcat'}, {path: 'i18n>approvedTxt'}, {path: 'i18n>informedStatus'}], formatter: 'jQuery.sap.formatMessage'}"
+								type="Type08"/>
+							<u:CalendarLegendItem text="{i18n>sentTxt}" type="Type01"/>
+							<u:CalendarLegendItem text="{i18n>rejectedTxt}" type="Type03"/>
+							<!--Allow adding further items to the calendar legend -->
+							<core:ExtensionPoint name="overviewCalendarLegendExtension"/>
+						</u:items>
+					</u:CalendarLegend>
+				</Panel>
+				<!--Allow adding further elements to the overview screen -->
+				<core:ExtensionPoint name="overviewPageExtension"/>
+			</VBox>
+		</l:ResponsiveFlowLayout>
+		<semantic:messagesIndicator>
+			<semantic:MessagesIndicator press="onHandlePopover"/>
+		</semantic:messagesIndicator>
+		<semantic:mainAction>
+			<semantic:MainAction id="btnCreateLeaveRequest" text="{i18n>createBtnTxt}" press="onCreateLeave" tooltip="{i18n>createViewTitle}"/>
+		</semantic:mainAction>
+		<semantic:customFooterContent>
+			<common:ConcurrentEmploymentOverflowToolbarButton id="toolBtnCE" assignmentChange="onAssignmentSwitch"
+				assignmentsLoaded="onAssignmentsLoaded"/>
+		</semantic:customFooterContent>
+	</semantic:FullscreenPage>
+</mvc:View>

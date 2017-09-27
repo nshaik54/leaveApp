@@ -1,0 +1,620 @@
+{
+  "_version": "1.1.0",
+  "resources": [
+    {
+      "name": "Component-dbg.js",
+      "module": "hcm/fab/myleaverequest/Component.js",
+      "isDebug": true,
+      "required": [
+        "sap/ui/core/UIComponent.js",
+        "sap/ui/core/routing/HashChanger.js",
+        "hcm/fab/lib/common/util/CommonModelManager.js",
+        "sap/ui/Device.js",
+        "sap/ui/model/json/JSONModel.js",
+        "hcm/fab/myleaverequest/model/models.js",
+        "hcm/fab/myleaverequest/controller/ErrorHandler.js"
+      ]
+    },
+    {
+      "name": "Component-preload.js",
+      "merged": true
+    },
+    {
+      "name": "Component.js",
+      "module": "hcm/fab/myleaverequest/Component.js",
+      "required": [
+        "sap/ui/core/UIComponent.js",
+        "sap/ui/core/routing/HashChanger.js",
+        "hcm/fab/lib/common/util/CommonModelManager.js",
+        "sap/ui/Device.js",
+        "sap/ui/model/json/JSONModel.js",
+        "hcm/fab/myleaverequest/model/models.js",
+        "hcm/fab/myleaverequest/controller/ErrorHandler.js"
+      ]
+    },
+    {
+      "name": "controller/App-dbg.controller.js",
+      "module": "hcm/fab/myleaverequest/controller/App.controller.js",
+      "isDebug": true,
+      "required": [
+        "hcm/fab/myleaverequest/controller/BaseController.js",
+        "sap/ui/model/json/JSONModel.js"
+      ]
+    },
+    {
+      "name": "controller/App.controller.js",
+      "module": "hcm/fab/myleaverequest/controller/App.controller.js",
+      "required": [
+        "hcm/fab/myleaverequest/controller/BaseController.js",
+        "sap/ui/model/json/JSONModel.js"
+      ]
+    },
+    {
+      "name": "controller/BaseController-dbg.js",
+      "module": "hcm/fab/myleaverequest/controller/BaseController.js",
+      "isDebug": true,
+      "required": [
+        "sap/ui/core/mvc/Controller.js"
+      ]
+    },
+    {
+      "name": "controller/BaseController.js",
+      "module": "hcm/fab/myleaverequest/controller/BaseController.js",
+      "required": [
+        "sap/ui/core/mvc/Controller.js"
+      ]
+    },
+    {
+      "name": "controller/Creation-dbg.controller.js",
+      "module": "hcm/fab/myleaverequest/controller/Creation.controller.js",
+      "isDebug": true,
+      "required": [
+        "hcm/fab/myleaverequest/utils/formatters.js",
+        "hcm/fab/myleaverequest/utils/utils.js",
+        "hcm/fab/myleaverequest/controller/BaseController.js",
+        "sap/ui/Device.js",
+        "sap/ui/core/routing/History.js",
+        "sap/ui/model/Filter.js",
+        "sap/ui/base/Event.js",
+        "sap/m/Title.js",
+        "sap/m/Label.js",
+        "sap/m/Input.js",
+        "sap/m/MessagePopover.js",
+        "sap/m/MessagePopoverItem.js",
+        "sap/m/MessageToast.js",
+        "sap/m/MessageBox.js",
+        "sap/m/UploadCollectionParameter.js",
+        "sap/ui/model/json/JSONModel.js",
+        "sap/ui/core/format/DateFormat.js",
+        "sap/ui/core/format/NumberFormat.js",
+        "hcm/fab/lib/common/controls/TeamCalendarControl.js",
+        "sap/m/Dialog.js",
+        "sap/m/Button.js",
+        "sap/m/StandardListItem.js"
+      ]
+    },
+    {
+      "name": "controller/Creation.controller.js",
+      "module": "hcm/fab/myleaverequest/controller/Creation.controller.js",
+      "required": [
+        "hcm/fab/myleaverequest/utils/formatters.js",
+        "hcm/fab/myleaverequest/utils/utils.js",
+        "hcm/fab/myleaverequest/controller/BaseController.js",
+        "sap/ui/Device.js",
+        "sap/ui/core/routing/History.js",
+        "sap/ui/model/Filter.js",
+        "sap/ui/base/Event.js",
+        "sap/m/Title.js",
+        "sap/m/Label.js",
+        "sap/m/Input.js",
+        "sap/m/MessagePopover.js",
+        "sap/m/MessagePopoverItem.js",
+        "sap/m/MessageToast.js",
+        "sap/m/MessageBox.js",
+        "sap/m/UploadCollectionParameter.js",
+        "sap/ui/model/json/JSONModel.js",
+        "sap/ui/core/format/DateFormat.js",
+        "sap/ui/core/format/NumberFormat.js",
+        "hcm/fab/lib/common/controls/TeamCalendarControl.js",
+        "sap/m/Dialog.js",
+        "sap/m/Button.js",
+        "sap/m/StandardListItem.js"
+      ]
+    },
+    {
+      "name": "controller/Display-dbg.controller.js",
+      "module": "hcm/fab/myleaverequest/controller/Display.controller.js",
+      "isDebug": true,
+      "required": [
+        "hcm/fab/myleaverequest/utils/utils.js",
+        "hcm/fab/myleaverequest/utils/formatters.js",
+        "hcm/fab/myleaverequest/controller/BaseController.js",
+        "sap/ui/core/routing/History.js",
+        "sap/ui/model/json/JSONModel.js",
+        "sap/ui/core/format/DateFormat.js",
+        "sap/m/Label.js",
+        "sap/m/Text.js",
+        "sap/m/LabelDesign.js",
+        "sap/m/MessageBox.js",
+        "sap/m/MessagePopover.js",
+        "sap/m/MessagePopoverItem.js"
+      ]
+    },
+    {
+      "name": "controller/Display.controller.js",
+      "module": "hcm/fab/myleaverequest/controller/Display.controller.js",
+      "required": [
+        "hcm/fab/myleaverequest/utils/utils.js",
+        "hcm/fab/myleaverequest/utils/formatters.js",
+        "hcm/fab/myleaverequest/controller/BaseController.js",
+        "sap/ui/core/routing/History.js",
+        "sap/ui/model/json/JSONModel.js",
+        "sap/ui/core/format/DateFormat.js",
+        "sap/m/Label.js",
+        "sap/m/Text.js",
+        "sap/m/LabelDesign.js",
+        "sap/m/MessageBox.js",
+        "sap/m/MessagePopover.js",
+        "sap/m/MessagePopoverItem.js"
+      ]
+    },
+    {
+      "name": "controller/ErrorHandler-dbg.js",
+      "module": "hcm/fab/myleaverequest/controller/ErrorHandler.js",
+      "isDebug": true,
+      "required": [
+        "sap/ui/base/Object.js",
+        "sap/ui/model/json/JSONModel.js",
+        "sap/m/MessageBox.js",
+        "sap/ui/core/message/Message.js",
+        "sap/ui/core/MessageType.js"
+      ]
+    },
+    {
+      "name": "controller/ErrorHandler.js",
+      "module": "hcm/fab/myleaverequest/controller/ErrorHandler.js",
+      "required": [
+        "sap/ui/base/Object.js",
+        "sap/ui/model/json/JSONModel.js",
+        "sap/m/MessageBox.js",
+        "sap/ui/core/message/Message.js",
+        "sap/ui/core/MessageType.js"
+      ]
+    },
+    {
+      "name": "controller/Overview-dbg.controller.js",
+      "module": "hcm/fab/myleaverequest/controller/Overview.controller.js",
+      "isDebug": true,
+      "required": [
+        "hcm/fab/myleaverequest/utils/utils.js",
+        "hcm/fab/myleaverequest/utils/formatters.js",
+        "hcm/fab/lib/common/util/TeamCalendarDataManager.js",
+        "jquery.sap.storage.js",
+        "sap/ui/Device.js",
+        "hcm/fab/myleaverequest/controller/BaseController.js",
+        "sap/ui/model/Filter.js",
+        "sap/ui/model/FilterOperator.js",
+        "sap/ui/core/routing/History.js",
+        "sap/ui/unified/DateRange.js",
+        "sap/ui/unified/DateTypeRange.js",
+        "sap/ui/model/json/JSONModel.js",
+        "sap/m/MessageBox.js",
+        "sap/m/MessagePopover.js",
+        "sap/m/MessagePopoverItem.js"
+      ]
+    },
+    {
+      "name": "controller/Overview.controller.js",
+      "module": "hcm/fab/myleaverequest/controller/Overview.controller.js",
+      "required": [
+        "hcm/fab/myleaverequest/utils/utils.js",
+        "hcm/fab/myleaverequest/utils/formatters.js",
+        "hcm/fab/lib/common/util/TeamCalendarDataManager.js",
+        "jquery.sap.storage.js",
+        "sap/ui/Device.js",
+        "hcm/fab/myleaverequest/controller/BaseController.js",
+        "sap/ui/model/Filter.js",
+        "sap/ui/model/FilterOperator.js",
+        "sap/ui/core/routing/History.js",
+        "sap/ui/unified/DateRange.js",
+        "sap/ui/unified/DateTypeRange.js",
+        "sap/ui/model/json/JSONModel.js",
+        "sap/m/MessageBox.js",
+        "sap/m/MessagePopover.js",
+        "sap/m/MessagePopoverItem.js"
+      ]
+    },
+    {
+      "name": "i18n/i18n.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n.properties",
+      "locale": "",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "i18n/i18n_ar.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n_ar.properties",
+      "locale": "ar",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "i18n/i18n_bg.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n_bg.properties",
+      "locale": "bg",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "i18n/i18n_cs.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n_cs.properties",
+      "locale": "cs",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "i18n/i18n_de.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n_de.properties",
+      "locale": "de",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "i18n/i18n_en.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n_en.properties",
+      "locale": "en",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "i18n/i18n_en_US_sappsd.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n_en_US_sappsd.properties",
+      "locale": "en_US_sappsd",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "i18n/i18n_en_US_saptrc.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n_en_US_saptrc.properties",
+      "locale": "en_US_saptrc",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "i18n/i18n_es.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n_es.properties",
+      "locale": "es",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "i18n/i18n_fr.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n_fr.properties",
+      "locale": "fr",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "i18n/i18n_hu.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n_hu.properties",
+      "locale": "hu",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "i18n/i18n_it.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n_it.properties",
+      "locale": "it",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "i18n/i18n_iw.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n_iw.properties",
+      "locale": "iw",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "i18n/i18n_ja.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n_ja.properties",
+      "locale": "ja",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "i18n/i18n_no.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n_no.properties",
+      "locale": "no",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "i18n/i18n_pl.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n_pl.properties",
+      "locale": "pl",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "i18n/i18n_pt.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n_pt.properties",
+      "locale": "pt",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "i18n/i18n_ru.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n_ru.properties",
+      "locale": "ru",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "i18n/i18n_sk.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n_sk.properties",
+      "locale": "sk",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "i18n/i18n_tr.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n_tr.properties",
+      "locale": "tr",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "i18n/i18n_zh_CN.properties",
+      "module": "hcm/fab/myleaverequest/i18n/i18n_zh_CN.properties",
+      "locale": "zh_CN",
+      "raw": "i18n/i18n.properties"
+    },
+    {
+      "name": "localService/metadata.xml"
+    },
+    {
+      "name": "localService/mockserver-dbg.js",
+      "isDebug": true
+    },
+    {
+      "name": "localService/mockserver.js"
+    },
+    {
+      "name": "manifest.json",
+      "module": "hcm/fab/myleaverequest/manifest.json"
+    },
+    {
+      "name": "model/models-dbg.js",
+      "module": "hcm/fab/myleaverequest/model/models.js",
+      "isDebug": true,
+      "required": [
+        "sap/ui/model/json/JSONModel.js",
+        "sap/ui/Device.js"
+      ]
+    },
+    {
+      "name": "model/models.js",
+      "module": "hcm/fab/myleaverequest/model/models.js",
+      "required": [
+        "sap/ui/model/json/JSONModel.js",
+        "sap/ui/Device.js"
+      ]
+    },
+    {
+      "name": "resources.json"
+    },
+    {
+      "name": "utils/formatters-dbg.js",
+      "module": "hcm/fab/myleaverequest/utils/formatters.js",
+      "isDebug": true,
+      "required": [
+        "hcm/fab/myleaverequest/utils/utils.js",
+        "sap/ui/model/odata/type/Decimal.js",
+        "sap/ui/core/format/DateFormat.js",
+        "sap/ui/core/format/NumberFormat.js",
+        "sap/ui/core/LocaleData.js"
+      ]
+    },
+    {
+      "name": "utils/formatters.js",
+      "module": "hcm/fab/myleaverequest/utils/formatters.js",
+      "required": [
+        "hcm/fab/myleaverequest/utils/utils.js",
+        "sap/ui/model/odata/type/Decimal.js",
+        "sap/ui/core/format/DateFormat.js",
+        "sap/ui/core/format/NumberFormat.js",
+        "sap/ui/core/LocaleData.js"
+      ]
+    },
+    {
+      "name": "utils/utils-dbg.js",
+      "module": "hcm/fab/myleaverequest/utils/utils.js",
+      "isDebug": true
+    },
+    {
+      "name": "utils/utils.js",
+      "module": "hcm/fab/myleaverequest/utils/utils.js"
+    },
+    {
+      "name": "version.json"
+    },
+    {
+      "name": "view/App.view.xml",
+      "module": "hcm/fab/myleaverequest/view/App.view.xml",
+      "required": [
+        "sap/ui/core/mvc/XMLView.js",
+        "hcm/fab/myleaverequest/controller/App.controller.js",
+        "sap/m/App.js"
+      ]
+    },
+    {
+      "name": "view/Creation.view.xml",
+      "module": "hcm/fab/myleaverequest/view/Creation.view.xml",
+      "required": [
+        "sap/ui/core/mvc/XMLView.js",
+        "hcm/fab/myleaverequest/controller/Creation.controller.js",
+        "sap/m/semantic/FullscreenPage.js",
+        "sap/m/VBox.js",
+        "sap/m/MessageStrip.js",
+        "sap/m/Link.js",
+        "sap/ui/layout/form/SimpleForm.js",
+        "sap/m/Label.js",
+        "sap/m/Select.js",
+        "sap/ui/core/ListItem.js",
+        "sap/m/HBox.js",
+        "sap/m/Text.js",
+        "sap/m/RadioButtonGroup.js",
+        "sap/m/RadioButton.js",
+        "sap/m/DateRangeSelection.js",
+        "sap/m/DatePicker.js",
+        "sap/m/TimePicker.js",
+        "sap/m/Input.js",
+        "sap/ui/layout/VerticalLayout.js",
+        "sap/m/FlexBox.js",
+        "sap/m/FlexItemData.js",
+        "sap/m/Button.js",
+        "sap/m/TextArea.js",
+        "sap/m/List.js",
+        "sap/m/FeedListItem.js",
+        "sap/ui/core/ExtensionPoint.js",
+        "sap/m/UploadCollection.js",
+        "sap/m/UploadCollectionItem.js",
+        "sap/m/OverflowToolbar.js",
+        "sap/m/ToolbarSpacer.js",
+        "sap/m/ProgressIndicator.js",
+        "sap/m/semantic/MessagesIndicator.js",
+        "sap/m/semantic/SaveAction.js",
+        "sap/m/semantic/CancelAction.js",
+        "sap/ui/core/InvisibleText.js"
+      ]
+    },
+    {
+      "name": "view/Display.view.xml",
+      "module": "hcm/fab/myleaverequest/view/Display.view.xml",
+      "required": [
+        "sap/ui/core/mvc/XMLView.js",
+        "hcm/fab/myleaverequest/controller/Display.controller.js",
+        "sap/m/semantic/DetailPage.js",
+        "sap/uxap/ObjectPageLayout.js",
+        "sap/uxap/ObjectPageHeader.js",
+        "sap/ui/core/InvisibleText.js",
+        "sap/ui/layout/VerticalLayout.js",
+        "sap/m/ObjectAttribute.js",
+        "sap/m/ObjectStatus.js",
+        "sap/ui/core/ExtensionPoint.js",
+        "sap/uxap/ObjectPageSection.js",
+        "sap/uxap/ObjectPageSubSection.js",
+        "sap/m/List.js",
+        "sap/m/FeedListItem.js",
+        "sap/m/UploadCollection.js",
+        "sap/m/UploadCollectionItem.js",
+        "hcm/fab/lib/common/controls/TeamCalendarControl.js",
+        "sap/m/semantic/MessagesIndicator.js",
+        "sap/m/semantic/EditAction.js",
+        "sap/m/semantic/DeleteAction.js"
+      ]
+    },
+    {
+      "name": "view/Overview.view.xml",
+      "module": "hcm/fab/myleaverequest/view/Overview.view.xml",
+      "required": [
+        "sap/ui/core/mvc/XMLView.js",
+        "hcm/fab/myleaverequest/controller/Overview.controller.js",
+        "sap/m/semantic/FullscreenPage.js",
+        "sap/ui/layout/ResponsiveFlowLayout.js",
+        "sap/m/VBox.js",
+        "sap/ui/layout/ResponsiveFlowLayoutData.js",
+        "sap/m/Panel.js",
+        "sap/m/Table.js",
+        "sap/m/OverflowToolbar.js",
+        "sap/m/Title.js",
+        "sap/m/ToolbarSpacer.js",
+        "sap/m/Label.js",
+        "sap/m/DatePicker.js",
+        "sap/ui/core/ExtensionPoint.js",
+        "sap/m/Column.js",
+        "sap/m/Text.js",
+        "sap/m/ColumnListItem.js",
+        "sap/m/ObjectIdentifier.js",
+        "sap/m/ObjectAttribute.js",
+        "sap/m/ObjectNumber.js",
+        "sap/m/SegmentedButton.js",
+        "sap/m/SegmentedButtonItem.js",
+        "sap/m/OverflowToolbarLayoutData.js",
+        "sap/m/ObjectStatus.js",
+        "sap/m/Button.js",
+        "sap/m/MessageStrip.js",
+        "sap/ui/unified/Calendar.js",
+        "sap/ui/unified/CalendarLegend.js",
+        "sap/ui/unified/CalendarLegendItem.js",
+        "sap/m/semantic/MessagesIndicator.js",
+        "sap/m/semantic/MainAction.js",
+        "hcm/fab/lib/common/controls/ConcurrentEmploymentOverflowToolbarButton.js"
+      ]
+    },
+    {
+      "name": "view/fragments/AdditionalFieldCheckbox.fragment.xml",
+      "module": "hcm/fab/myleaverequest/view/fragments/AdditionalFieldCheckbox.fragment.xml",
+      "required": [
+        "sap/ui/core/Fragment.js",
+        "sap/m/Label.js",
+        "sap/m/CheckBox.js"
+      ]
+    },
+    {
+      "name": "view/fragments/AdditionalFieldDatePicker.fragment.xml",
+      "module": "hcm/fab/myleaverequest/view/fragments/AdditionalFieldDatePicker.fragment.xml",
+      "required": [
+        "sap/ui/core/Fragment.js",
+        "sap/m/Label.js",
+        "sap/m/DatePicker.js"
+      ]
+    },
+    {
+      "name": "view/fragments/AdditionalFieldInput.fragment.xml",
+      "module": "hcm/fab/myleaverequest/view/fragments/AdditionalFieldInput.fragment.xml",
+      "required": [
+        "sap/ui/core/Fragment.js",
+        "sap/m/Label.js",
+        "sap/m/Input.js"
+      ]
+    },
+    {
+      "name": "view/fragments/AdditionalFieldInputInteger.fragment.xml",
+      "module": "hcm/fab/myleaverequest/view/fragments/AdditionalFieldInputInteger.fragment.xml",
+      "required": [
+        "sap/ui/core/Fragment.js",
+        "sap/m/Label.js",
+        "sap/m/Input.js"
+      ]
+    },
+    {
+      "name": "view/fragments/AdditionalFieldSearchHelperInput.fragment.xml",
+      "module": "hcm/fab/myleaverequest/view/fragments/AdditionalFieldSearchHelperInput.fragment.xml",
+      "required": [
+        "sap/ui/core/Fragment.js",
+        "sap/m/Label.js",
+        "sap/m/Input.js",
+        "sap/ui/core/CustomData.js"
+      ]
+    },
+    {
+      "name": "view/fragments/AdditionalFieldTimePicker.fragment.xml",
+      "module": "hcm/fab/myleaverequest/view/fragments/AdditionalFieldTimePicker.fragment.xml",
+      "required": [
+        "sap/ui/core/Fragment.js",
+        "sap/m/Label.js",
+        "sap/m/TimePicker.js"
+      ]
+    },
+    {
+      "name": "view/fragments/ApproverDialog.fragment.xml",
+      "module": "hcm/fab/myleaverequest/view/fragments/ApproverDialog.fragment.xml",
+      "required": [
+        "sap/ui/core/Fragment.js",
+        "sap/m/SelectDialog.js"
+      ]
+    },
+    {
+      "name": "view/fragments/EntitlementDetail.fragment.xml",
+      "module": "hcm/fab/myleaverequest/view/fragments/EntitlementDetail.fragment.xml",
+      "required": [
+        "sap/ui/core/Fragment.js",
+        "sap/m/QuickView.js",
+        "sap/m/QuickViewPage.js",
+        "sap/m/QuickViewGroup.js",
+        "sap/m/QuickViewGroupElement.js"
+      ]
+    },
+    {
+      "name": "view/fragments/SearchHelperDialog.fragment.xml",
+      "module": "hcm/fab/myleaverequest/view/fragments/SearchHelperDialog.fragment.xml",
+      "required": [
+        "sap/ui/core/Fragment.js",
+        "sap/m/SelectDialog.js",
+        "sap/m/StandardListItem.js"
+      ]
+    }
+  ]
+}

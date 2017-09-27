@@ -1,0 +1,13 @@
+<!--
+
+    Copyright (C) 2009-2017 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<Label id="addFieldIntegerLabel" required="{local>Required}" visible="true" text="{local>FieldLabel}"
+		labelFor="addFieldInteger"/>
+	<Input id="addFieldInteger" required="false" maxLength="{= parseInt(${local>Length}, 10) || 0 }"
+		enabled="{formatter:'.formatter.isGroupEnabled', parts: [ { path: 'StartDate' }, { path: 'AbsenceTypeCode' } ]}"
+		value="{ path: 'local>value', type: 'sap.ui.model.type.Integer'}">
+	</Input>
+</core:FragmentDefinition>

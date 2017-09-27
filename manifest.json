@@ -1,0 +1,200 @@
+{
+	"_version": "1.4.0",
+
+	"sap.app": {
+		"id": "hcm.fab.myleaverequest",
+		"type": "application",
+		"resources": "resources.json",
+		"i18n": "i18n/i18n.properties",
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"applicationVersion": {
+			"version": "1.0.35"
+		},
+		"ach": "PA-FIO-LEA",
+		"dataSources": {
+			"leaveService": {
+				"uri": "/sap/opu/odata/sap/HCMFAB_LEAVE_REQUEST_CR_SRV",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml"
+				}
+			}
+		},
+		"sourceTemplate": {
+			"id": "sap.ui.ui5-template-plugin.1worklist",
+			"version": "1.36.2"
+		}
+	},
+	"sap.fiori": {
+		"registrationIds": ["F1311A"],
+		"archeType": "transactional"
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "sap-icon://task",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": ["sap_hcb", "sap_bluecrystal"]
+	},
+	"sap.ui5": {
+		"handleValidation": true,
+		"rootView": {
+			"viewName": "hcm.fab.myleaverequest.view.App",
+			"type": "XML",
+			"id": "app"
+		},
+		"dependencies": {
+			"minUI5Version": "1.44.9",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.ui.unified": {},
+				"sap.m": {},
+				"sap.ushell": {},
+				"sap.ui.layout": {},
+				"sap.uxap": {},
+				"hcm.fab.lib.common": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"config": {
+			"sapFiori2Adaptation": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "hcm.fab.myleaverequest.i18n.i18n"
+				}
+			},
+			"": {
+				"dataSource": "leaveService",
+				"settings": {
+					"defaultBindingMode": "TwoWay",
+					"useBatch": true,
+					"disableHeadRequestForToken": true,
+					"metadataUrlParams": {
+						"sap-documentation": "heading"
+					}
+				}
+			},
+			"local": {
+				"type": "sap.ui.model.json.JSONModel",
+				"settings": {}
+			}
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "hcm.fab.myleaverequest.view",
+				"controlId": "App",
+				"controlAggregation": "pages",
+				"bypassed": {
+					"target": ["overview"]
+				},
+				"async": true
+			},
+			"routes": [{
+				"pattern": "",
+				"name": "overview",
+				"target": ["overview"]
+			}, {
+				"name": "creationWithParams",
+				"pattern": "creationPage/absence-{absenceType}/from-{dateFrom}/to-{dateTo}",
+				"greedy": false,
+				"target": ["creation"]
+			}, {
+				"name": "creationWithParamsAndEmpleeId",
+				"pattern": "creationPage/id-{employeeId}/absence-{absenceType}/from-{dateFrom}/to-{dateTo}",
+				"greedy": false,
+				"target": ["creation"]
+			}, {
+				"name": "creation",
+				"pattern": "creationPage",
+				"greedy": false,
+				"target": ["creation"]
+			}, {
+				"name": "creationWithEmployeeId",
+				"pattern": "creationPage/id-{employeeId}",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["creation"]
+			}, {
+				"name": "displayWithEmployeeId",
+				"pattern": "display/id-{employeeId}/{leavePath}",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["display"]
+			}, {
+				"name": "display",
+				"pattern": "display/{leavePath}",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["display"]
+			}, {
+				"name": "edit",
+				"pattern": "editPage/{leavePath}",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["edit"]
+			}, {
+				"name": "editWithEmployeeId",
+				"pattern": "editPage/id-{employeeId}/{leavePath}",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["creation"]
+			}],
+			"targets": {
+				"overview": {
+					"viewName": "Overview",
+					"viewId": "overview",
+					"viewLevel": 1
+				},
+				"creation": {
+					"viewName": "Creation",
+					"viewId": "creation",
+					"viewLevel": 1
+				},
+				"display": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "Display",
+					"viewLevel": 1,
+					"viewId": "display"
+				},
+				"creationWithParams": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "Creation",
+					"viewId": "creation",
+					"viewLevel": 1
+				},
+				"edit": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewName": "Creation",
+					"viewId": "creation",
+					"viewLevel": 1
+				}
+			}
+		}
+	}
+}

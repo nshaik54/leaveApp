@@ -1,0 +1,12 @@
+<!--
+
+    Copyright (C) 2009-2017 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<Label id="addFieldCheckBoxLabel" required="{local>Required}" visible="true" text="{local>FieldLabel}"
+		labelFor="addFieldCheckBox"/>
+	<CheckBox id="addFieldCheckBox"
+		enabled="{ formatter:'.formatter.isGroupEnabled', parts: [ { path: 'StartDate' }, { path: 'AbsenceTypeCode' } ]}"
+		selected="{local>value}"/>
+</core:FragmentDefinition>

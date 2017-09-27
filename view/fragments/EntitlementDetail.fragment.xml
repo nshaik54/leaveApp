@@ -1,0 +1,31 @@
+<!--
+
+    Copyright (C) 2009-2017 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<QuickView id="quickView">
+		<QuickViewPage header="{i18n>entitlementTabTitle}" title="{TimeAccountTypeName}" pageId="entitlementDetailPage">
+			<QuickViewGroup>
+				<QuickViewGroupElement label="{i18n>deducValidTxt}"
+					value="{path:'DeductionEndDate', type: 'sap.ui.model.odata.type.DateTime', constraints: {displayFormat : 'Date'}}" type="Text"/>
+				<!-- Available Entitlement -->
+				<QuickViewGroupElement label="{i18n>availableText}"
+					value="{parts:[{path:'i18n>leaveDurTextWCode'},{path:'BalanceAvailableQuantity', type: 'sap.ui.model.odata.type.Double', formatOptions: { maxFractionDigits: 2, minFractionDigits: 0}}, {path: 'TimeUnitName'}], formatter:'jQuery.sap.formatMessage'}"
+					type="Text"/>
+				<!-- Planned Entitlement -->
+				<QuickViewGroupElement label="{i18n>plannedText}"
+					value="{parts:[{path:'i18n>leaveDurTextWCode'},{path:'BalancePlannedQuantity', type: 'sap.ui.model.odata.type.Double', formatOptions: { maxFractionDigits: 2, minFractionDigits: 0}}, {path: 'TimeUnitName'}], formatter:'jQuery.sap.formatMessage'}"
+					type="Text"/>
+				<!-- Used Entitlement -->
+				<QuickViewGroupElement label="{i18n>usedText}"
+					value="{parts:[{path:'i18n>leaveDurTextWCode'},{path:'BalanceUsedQuantity', type: 'sap.ui.model.odata.type.Double', formatOptions: { maxFractionDigits: 2, minFractionDigits: 0}}, {path: 'TimeUnitName'}], formatter:'jQuery.sap.formatMessage'}"
+					type="Text"/>
+				<!-- Allocated Entitlement -->
+				<QuickViewGroupElement label="{i18n>entitlementTxt}"
+					value="{parts:[{path:'i18n>leaveDurTextWCode'},{path:'BalanceEntitlementQuantity', type: 'sap.ui.model.odata.type.Double', formatOptions: { maxFractionDigits: 2, minFractionDigits: 0}}, {path: 'TimeUnitName'}], formatter:'jQuery.sap.formatMessage'}"
+					type="Text"/>
+			</QuickViewGroup>
+		</QuickViewPage>
+	</QuickView>
+</core:FragmentDefinition>

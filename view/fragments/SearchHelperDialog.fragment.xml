@@ -1,0 +1,10 @@
+<!--
+
+    Copyright (C) 2009-2017 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog title="{/DialogTitle}" noDataText="{/NoDataText}" search="handleSearch" confirm="handleClose" items="{/Collection}">
+		<StandardListItem title="{Title}" description="{Description}" type="Active"/>
+	</SelectDialog>
+</core:FragmentDefinition>

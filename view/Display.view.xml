@@ -1,0 +1,109 @@
+<!--
+
+    Copyright (C) 2009-2017 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:View xmlns:core="sap.ui.core" xmlns:ux="sap.uxap" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:semantic="sap.m.semantic"
+	controllerName="hcm.fab.myleaverequest.controller.Display" xmlns:layout="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:common="hcm.fab.lib.common.controls">
+	<semantic:DetailPage id="page" navButtonPress="onNavBack" showSubHeader="false" semanticRuleSet="Optimized" busy="{local>/busy}"
+		floatingFooter="true" enableScrolling="false" title="{i18n>displayViewTitle}">
+		<ux:ObjectPageLayout id="ObjectPageLayout" showFooter="true" useTwoColumnsForLargeScreen="true" showTitleInHeaderContent="true"
+			flexEnabled="true" subSectionLayout="TitleOnTop" showAnchorBarPopover="true" upperCaseAnchorBar="false" enableLazyLoading="false"
+			visible="{local>/notdataloading}">
+			<ux:headerTitle>
+				<ux:ObjectPageHeader id="ObjectPageLayoutHeaderTitle" objectImageURI="sap-icon://general-leave-request" objectImageShape="Circle"
+					objectTitle="{AbsenceTypeName}" objectImageDensityAware="true"
+					objectSubtitle="{parts:[ {path:'StartDate', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { style: 'medium' }, constraints: { displayFormat : 'Date' }}, {path:'EndDate', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { style: 'medium' }, constraints: { displayFormat : 'Date' }} ], formatter:'.formatter.formatOverviewLeaveDates'}"
+					objectImageAlt="{AbsenceTypeName}" isObjectIconAlwaysVisible="false" isObjectTitleAlwaysVisible="false"
+					isObjectSubtitleAlwaysVisible="false" isActionAreaAlwaysVisible="true" showPlaceholder="true"/>
+			</ux:headerTitle>
+			<ux:headerContent>
+				<core:InvisibleText id="placeholderElement" text="{i18n>generalSecTxt}"/>
+				<layout:VerticalLayout width="{= ${device>/system/phone} ? '100%' : null }">
+					<!--Start/End Time -->
+					<ObjectAttribute id="startEndTimeAttr" title="{i18n>timePickTxt}"
+						text="{parts:[{path:'StartTime', type:'sap.ui.model.type.Time', formatOptions:{ source : { pattern : 'HHmmss' }}},{path:'EndTime', type:'sap.ui.model.type.Time', formatOptions:{ source : { pattern : 'HHmmss' }}}],formatter:'.formatter.formatTimeToShortLocale'}"
+						visible="{= ${StartTime} === '000000' ? false : true }"/>
+					<!--Planned Working Days (Absence Days) -->
+					<ObjectAttribute id="workingDaysReq" title="{i18n>absenceDaysTxt}" visible="{= ${AdditionalFields/FullDay} === 'X'}"
+						text="{parts:[{path:'i18n>leaveDurTextWCode'},{path:'PlannedWorkingDays', type: 'sap.ui.model.odata.type.Double', formatOptions: { maxFractionDigits: 2, minFractionDigits: 0 }}, {path:'i18n>daysTxt'}], formatter:'.formatter.localMessageFormatter'}"/>
+					<!--Planned Working Hours (Absence Hours) -->
+					<ObjectAttribute id="workingHoursReq" title="{i18n>absenceHoursTxt}" visible="{= ${AdditionalFields/FullDay} === ''}"
+						text="{parts:[{path:'i18n>leaveDurTextWCode'},{path:'PlannedWorkingHours', type: 'sap.ui.model.odata.type.Double', formatOptions: { maxFractionDigits: 2, minFractionDigits: 0 }}, {path:'i18n>hoursTxt'}], formatter:'.formatter.localMessageFormatter'}"/>
+					<!--Quota Used -->
+					<ObjectAttribute id="quotaUsedAttr" title="{i18n>quotaUsedTxt}" visible="{= ${QuotaUsed} > 0}"
+						text="{parts:[{path:'i18n>leaveDurTextWCode'},{path:'QuotaUsed', type: 'sap.ui.model.odata.type.Double', formatOptions: { maxFractionDigits: 5, minFractionDigits: 0 }}, {path:'TimeUnitTxt'}], formatter:'.formatter.formatUsedQuotaAttribute'}"/>
+					<!--Leave Type -->
+					<ObjectAttribute id="absenceTypeAttr" title="{i18n>leaveTypTxt}" text="{AbsenceTypeName}"/>
+				</layout:VerticalLayout>
+				<layout:VerticalLayout width="{= ${device>/system/phone} ? '100%' : null }">
+					<!--Created On -->
+					<ObjectAttribute id="createdOn" title="{i18n>createdOn}"
+						text="{path:'FirstSubmissionDate', type: 'sap.ui.model.odata.type.DateTime', constraints: {displayFormat : 'Date'}}"/>
+					<!--Approver -->
+					<ObjectAttribute id="approverAttr" title="{i18n>approverTxt}" text="{ApproverLvl1/Name}" visible="{= !!${ApproverLvl1/Name}}"/>
+					<!--Status -->
+					<ObjectStatus id="status" title="{i18n>status}" text="{StatusTxt}" state="{path:'StatusID', formatter:'.formatter.statusFormatter'}"/>
+				</layout:VerticalLayout>
+				<!--Allow adding elements to the object header -->
+				<core:ExtensionPoint name="displayObjectHeaderExtension"/>
+			</ux:headerContent>
+			<ux:sections>
+				<ux:ObjectPageSection id="commentsSection" title="{i18n>commentsSecTxt}" titleUppercase="false">
+					<ux:subSections>
+						<ux:ObjectPageSubSection id="commentsSubSection" title="{i18n>commentsSecTxt}" titleUppercase="false" visible="{= ${Notes} ? true : false}">
+							<ux:blocks>
+								<List id="feedListDisplay" items="{noteModel>/NoteCollection}">
+									<FeedListItem sender="{noteModel>EmployeeName}" senderActive="false" icon="sap-icon://employee" iconActive="false" iconDensityAware="false"
+										timestamp="{parts:[{path:'noteModel>Date'},{path:'noteModel>Time'}], formatter:'.formatter.formatFeedTimeStamp'}" text="{noteModel>Text}"
+										info="{i18n>commentsSecTxt}"/>
+								</List>
+							</ux:blocks>
+						</ux:ObjectPageSubSection>
+					</ux:subSections>
+				</ux:ObjectPageSection>
+				<ux:ObjectPageSection id="attachmentsSection" title="{i18n>attachmentSecTxt}" titleUppercase="false">
+					<ux:subSections>
+						<ux:ObjectPageSubSection id="attachmentsSubSection" title="{i18n>attachmentSecTxt}" titleUppercase="false"
+							visible="{= ${Attachment1/FileName} ? true : false}">
+							<ux:blocks>
+								<UploadCollection id="AttachmentDisplayCollection" multiple="false" showSeparators="None" uploadEnabled="false" uploadButtonInvisible="true"
+									numberOfAttachmentsText=" " items="{ path: 'local>/attachments' }">
+									<items>
+										<UploadCollectionItem fileName="{local>FileName}" mimeType="{local>FileType}"
+											uploadedDate="{ formatter: '._attachmentDateTimeFormatter', parts: [ { path: 'local>CreaDate' }, { path: 'local>CreaTime' } ] }"
+											documentId="{local>ArchivDocId}"
+											url="{ formatter: '._attachmentUrlFormatter', parts: [ {path: 'local>ArchivDocId' }, {path: 'local>FileName' } ]}" visibleDelete="false"
+											visibleEdit="false"/>
+									</items>
+								</UploadCollection>
+							</ux:blocks>
+						</ux:ObjectPageSubSection>
+					</ux:subSections>
+				</ux:ObjectPageSection>
+				<ux:ObjectPageSection id="teamCaleSection" title="{i18n>caleSecTxt}" titleUppercase="false">
+					<ux:subSections>
+						<ux:ObjectPageSubSection id="teamCaleSubSection" title="{i18n>caleSecTxt}" titleUppercase="false">
+							<ux:blocks>
+								<common:TeamCalendarControl id="teamCalendar" assignmentId="{local>/display-employeeId}" applicationId="MYLEAVEREQUESTS"
+									instanceId="STANDALONE" startDate="{StartDate}" class="sapUiForceWidthAuto sapUiResponsiveMargin"/>
+							</ux:blocks>
+						</ux:ObjectPageSubSection>
+					</ux:subSections>
+				</ux:ObjectPageSection>
+				<!--Allow adding sections to the Display Page -->
+				<core:ExtensionPoint name="displaySectionsExtension"/>
+			</ux:sections>
+		</ux:ObjectPageLayout>
+		<semantic:messagesIndicator>
+			<semantic:MessagesIndicator press="onHandlePopover"/>
+		</semantic:messagesIndicator>
+		<semantic:editAction>
+			<semantic:EditAction id="editButton" enabled="{local>/display-editEnabled}" press="onEditRequest"/>
+		</semantic:editAction>
+		<semantic:deleteAction>
+			<semantic:DeleteAction id="withdrawButton" enabled="{local>/display-withdrawEnabled}" press="onDeleteRequest"/>
+		</semantic:deleteAction>
+	</semantic:DetailPage>
+</core:View>

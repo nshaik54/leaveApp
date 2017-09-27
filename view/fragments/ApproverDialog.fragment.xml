@@ -1,0 +1,10 @@
+<!--
+
+    Copyright (C) 2009-2017 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog id="approverSelect" noDataText="{i18n>noAppFoundTxt}" title="{i18n>selApproversTxt}" search="handleSearch" confirm="handleClose">
+		<!-- items will be bound dynmically in Creation.controller.js -->
+	</SelectDialog>
+</core:FragmentDefinition>

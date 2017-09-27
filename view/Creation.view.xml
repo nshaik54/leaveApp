@@ -1,0 +1,205 @@
+<!--
+
+    Copyright (C) 2009-2017 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="hcm.fab.myleaverequest.controller.Creation"
+	xmlns:semantic="sap.m.semantic" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+	<semantic:FullscreenPage busyIndicatorDelay="0" busy="{local>/create-busy}" navButtonPress="onNavBack" showSubHeader="false"
+		floatingFooter="true" title="{local>/create-viewTitle}">
+		<semantic:content>
+			<VBox class="sapUiResponsiveMargin">
+				<!-- Overlap Calendar MessageStrip -->
+				<MessageStrip id="overlapCalendarInfoStrip"
+					text="{formatter: '.formatter.calendarOverlapText', parts: [ 'local>/calendar/overlapNumber', 'i18n>calendarNoOverlaps', 'i18n>calendarHasOverlaps' ] }"
+					type="Information" showIcon="true" visible="{= (${local>/calendar/overlapNumber} > 0) }">
+					<link>
+						<Link id="timeOverlapCalendarLink" text="{i18n>calendarShowConflicts}" visible="{= (${local>/calendar/overlapNumber} > 0) }"
+							press="onOverlapOpen"/>
+					</link>
+				</MessageStrip>
+				<!-- Create Leave Request Form -->
+				<f:SimpleForm id="creationSimpleForm" title="{i18n>createFormTitle}" editable="true" layout="ResponsiveGridLayout" labelSpanXL="-1"
+					emptySpanXL="-1" columnsXL="-1" labelSpanL="3" emptySpanL="4" columnsL="1" labelSpanM="3" emptySpanM="4" columnsM="1" labelSpanS="12"
+					emptySpanS="0" adjustLabelSpan="false" singleContainerFullSize="true">
+					<f:content>
+						<!-- Type of Leave -->
+						<Label id="leaveTypeLabel" text="{i18n>leaveTypTxt}" labelFor="absenceType"/>
+						<Select width="100%" items="{}" id="absenceType" selectedKey="{AbsenceTypeCode}" forceSelection="false" change="onAbsenceTypeChange"
+							showSecondaryValues="true" enabled="{= ${AbsenceTypeCode} ? true : false }">
+							<items>
+								<core:ListItem id="selectionTypeItem" key="{AbsenceTypeCode}" text="{AbsenceTypeName}" additionalText="{AbsenceTypeCode}"/>
+							</items>
+						</Select>
+						<!-- Quota Availability Information -->
+						<HBox renderType="Bare" alignItems="Center" alignContent="Center" justifyContent="Start">
+							<Label id="quotaText" design="Bold"
+								text="{ parts: [ 'local>/create-BalanceAvailableQuantity', 'local>/create-isQuotaCalculated' ], formatter:'.formatter.formatQuotaAvailability' }"/>
+							<Text id="quotaUnit" text="{= ${local>/create-TimeUnitName}.concat(' ').concat(${i18n>availableTxt})}"
+								visible="{local>/create-isQuotaCalculated}"/>
+						</HBox>
+						<!-- Multi-/Single-Day Selection -->
+						<!-- [*] More than 1 day    [ ] One day or less -->
+						<Label id="multiSingleDayLabel" text="{i18n>radioButtonLabel}" labelFor="singleOrMultiDayBtnGroup" visible="{device>/system/phone}"/>
+						<RadioButtonGroup id="singleOrMultiDayBtnGroup" columns="2" select="onSingleMultiDayRadioSelected" enabled="{= !!${AbsenceTypeCode} }"
+							selectedIndex="{ path: 'local>/create-multiOrSingleDayRadioGroupIndex', mode: 'TwoWay' }" ariaLabelledBy="multiSingleDayLabel">
+							<buttons>
+								<RadioButton text="{i18n>multiDaysTxt}" ariaLabelledBy="multiDayRadioButtonTxt"
+									enabled="{ formatter: '.formatter.isMoreThanOneDayAllowed', parts: ['local>/create-AllowedDurationMultipleDayInd'] }"/>
+								<RadioButton text="{i18n>oneDayTxt}" ariaLabelledBy="singleDayRadioButtonTxt"
+									enabled="{ formatter: '.formatter.isOneDayOrLessAllowed', parts: [ 'local>/create-AllowedDurationMultipleDayInd', 'local>/create-AllowedDurationSingleDayInd' ] }"/>
+							</buttons>
+						</RadioButtonGroup>
+						<!--  Start/End Date (EDIT) -->
+						<!--<Label id="datePickerEditLabel" required="true" visible="{= ${local>/create-multiOrSingleDayRadioGroupIndex} === 0 }"-->
+						<!--	text="{i18n>startEndTxt}" labelFor="startEndDatePickerBox"/>-->
+						<!--<HBox id="startEndDatePickerBox" renderType="Bare">-->
+						<!--	<DatePicker id="startDatePicker" tooltip=""-->
+						<!--		value="{ path: 'StartDate', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { UTC: true }, constraints: { displayFormat: 'Date' } }"-->
+						<!--		change="onDateChange"/>-->
+						<!--	<DatePicker id="endDatePicker" tooltip=""-->
+						<!--		value="{ path: 'EndDate', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { UTC: true }, constraints: { displayFormat: 'Date' } }"-->
+						<!--		change="onDateChange"/>-->
+						<!--</HBox>-->
+						<!--  Start/End Date (CREATE) -->
+						<Label id="rangeSelectorLabel" required="true" visible="{= ${local>/create-multiOrSingleDayRadioGroupIndex} === 0 }"
+							text="{i18n>startEndTxt}" labelFor="dateRange"/>
+						<DateRangeSelection id="dateRange" enabled="{= !!${AbsenceTypeCode} }" change="onDateRangeChanged" dateValue="{StartDate}"
+							secondDateValue="{EndDate}" visible="{= ${local>/create-multiOrSingleDayRadioGroupIndex} === 0 }"/>
+						<!--  Start Date only -->
+						<Label id="startDateLabel" required="true" text="{i18n>dateTxt}" labelFor="startDate"
+							visible="{= ${local>/create-multiOrSingleDayRadioGroupIndex} === 1 }"/>
+						<DatePicker id="startDate" change="onDatePickChanged" enabled="{= !!${AbsenceTypeCode} }"
+							value="{ path: 'StartDate', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { UTC: true }, constraints: { displayFormat: 'Date' } }"
+							visible="{= ${local>/create-multiOrSingleDayRadioGroupIndex} === 1 }"/>
+						<!-- Start/End Time -->
+						<Label id="startEndTimeLabel" text="{i18n>timePickTxt}"
+							visible="{formatter: '.formatter.isTimePickerAvailable', parts: [ 'local>/create-multiOrSingleDayRadioGroupIndex', 'local>/create-showTimePicker' ] }"/>
+						<HBox renderType="Bare"
+							visible="{formatter: '.formatter.isTimePickerAvailable', parts: [ 'local>/create-multiOrSingleDayRadioGroupIndex', 'local>/create-showTimePicker' ] }">
+							<TimePicker id="startTimePick" width="100%" class="sapUiTinyMarginEnd"
+								enabled="{ formatter:'.formatter.isTimePickerEnabled', parts: [ { path: 'StartDate' }, { path: 'AbsenceTypeCode' }, { path: 'local>/create-inputHoursFilled' } ]}"
+								value="{StartTime}" valueFormat="HHmmss" change="onTimeChange"
+								displayFormat="{ path: 'local>/shortDisplayFormat', formatter:'.formatter.displayTimeShort'}"/>
+							<TimePicker id="endTimePick" width="100%"
+								enabled="{ formatter:'.formatter.isTimePickerEnabled', parts: [ { path: 'StartDate' }, { path: 'AbsenceTypeCode' }, { path: 'local>/create-inputHoursFilled' } ]}"
+								value="{EndTime}" valueFormat="HHmmss" change="onTimeChange"
+								displayFormat="{ path: 'local>/shortDisplayFormat', formatter:'.formatter.displayTimeShort'}"/>
+						</HBox>
+						<!-- Input Hours -->
+						<Label id="inputHoursLabel" text="{i18n>inputHoursTxt}" labelFor="hoursValue"
+							visible="{formatter: '.formatter.isInputHoursAvailable', parts: [ 'local>/create-multiOrSingleDayRadioGroupIndex', 'local>/create-showInputHours' ] }"/>
+						<Input id="hoursValue" change="onInputHoursChange" type="Text"
+							enabled="{ formatter:'.formatter.isInputHoursEnabled', parts: [ { path: 'StartDate' }, { path: 'AbsenceTypeCode' }, { path: 'local>/create-timePickerFilled' } ]}"
+							required="false"
+							visible="{formatter: '.formatter.isInputHoursAvailable', parts: [ 'local>/create-multiOrSingleDayRadioGroupIndex', 'local>/create-showInputHours' ] }"
+							value="{ path: 'PlannedWorkingHours', type: 'sap.ui.model.odata.type.Decimal', formatOptions: { parseAsString: true, decimals: 2, maxFractionDigits: 2, minFractionDigits: 0 }, constraints: { precision: 4, scale: 2, minimum: '0', maximum: '24' }}"/>
+						<!-- Quota Usage Information -->
+						<Label id="daysTimeUsageLabel" required="false" text="{i18n>quotaUsageInfo}" labelFor="workingTimeStrip" visible="{device>/system/phone}"/>
+						<HBox renderType="Bare" alignItems="Center" alignContent="Center" justifyContent="Start"
+							visible="{= ${local>/create-isQuotaCalculated} &amp;&amp; ${formatter:'.formatter.isGroupEnabled', parts: [ { path: 'StartDate' }, { path: 'AbsenceTypeCode' }]}}">
+							<Label id="usedWorkingTimeText" design="Bold" text="{ path:'local>/create-usedWorkingTime', formatter:'.formatter.availableDays' }"/>
+							<Text id="usedWorkingTimeUnit" text="{= ${local>/create-usedWorkingTimeUnit}.concat(' ').concat(${i18n>usedWorkingTime})}"/>
+						</HBox>
+						<!-- Approvers -->
+						<Label id="approverLabel"
+							text="{ formatter:'.formatter.getSingleOrMultipleApproverLabel', parts: [ 'local>/create-MultipleApproverFlag', 'i18n>approverTxt', 'i18n>approversTxt' ]}"
+							labelFor="approverInput" visible="{= ${local>/create-isApproverVisible}}"/>
+						<l:VerticalLayout content="{local>/create-MultipleApprovers}" visible="{= ${local>/create-isApproverVisible}}"
+							enabled="{ formatter:'.formatter.isGroupEnabled', parts: [ { path: 'StartDate' }, { path: 'AbsenceTypeCode' } ]}">
+							<l:content>
+								<FlexBox alignItems="Start" alignContent="SpaceBetween" justifyContent="SpaceBetween" renderType="Bare">
+									<Input id="approverInput" showValueHelp="true" showSuggestion="false" valueHelpRequest="onApproverValueHelp" value="{local>Name}"
+										editable="{= ${local>/create-readOnlyApprover} ? false : true }">
+										<layoutData>
+											<FlexItemData growFactor="1"/>
+										</layoutData>
+									</Input>
+									<!--Remove Approver Button -->
+									<Button id="removeApproverBtn" class="sapUiTinyMarginBegin" icon="sap-icon://sys-cancel" type="Transparent"
+										visible="{ formatter: '.formatter.isApproverPlusMinusButtonVisible', parts: [ 'local>/create-addDelApprovers', 'local>/create-MultipleApproverFlag' ]}"
+										enabled="{ formatter: 'hcm.fab.myleaverequest.utils.formatters.isAdditionalApproverRemoveIconEnabled', parts: ['local>/create-MultipleApprovers'] }"
+										press="onRemoveApproverClicked" tooltip="{i18n>removeApproverTxt}">
+										<layoutData>
+											<FlexItemData growFactor="0"/>
+										</layoutData>
+									</Button>
+									<!--Add Approver Button -->
+									<Button id="addApproverBtn" class="sapUiMediumMarginEnd" tooltip="{i18n>addApproverTxt}"
+										enabled="{ parts: [{ path: 'StartDate' }, { path: 'AbsenceTypeCode' }, { path: 'local>/create-approverLevel' }, { path: 'local>/create-MultipleApprovers' }], formatter: '.formatter.enableAddApprover' }"
+										icon="sap-icon://add" type="Transparent" press="onAddApproverClicked"
+										visible="{ formatter: '.formatter.isApproverPlusMinusButtonVisible', parts: [ 'local>/create-addDelApprovers', 'local>/create-MultipleApproverFlag' ]}"/>
+								</FlexBox>
+							</l:content>
+						</l:VerticalLayout>
+						<!-- New Note -->
+						<Label id="noteLabel" text="{i18n>newNote}" labelFor="newNotesTextArea" visible="{local>/create-isNoteVisible}"/>
+						<TextArea id="newNotesTextArea" rows="5" growing="true" value="{local>/create-notes}" liveChange="notesLiveChange" valueLiveUpdate="false"
+							visible="{local>/create-isNoteVisible}"
+							enabled="{formatter:'.formatter.isGroupEnabled', parts: [ { path: 'StartDate' }, { path: 'AbsenceTypeCode' } ]}"/>
+						<!-- Old Notes (for edit mode) -->
+						<Label id="oldNoteLabel" text="{i18n>notesTxt}" visible="{ path:'Notes', formatter:'.formatter.isOldNotesVisible' }"
+							labelFor="feedListDisplay"/>
+						<List id="feedListDisplay" items="{noteModel>/NoteCollection}" visible="{ path:'Notes', formatter:'.formatter.isOldNotesVisible' }">
+							<FeedListItem sender="{noteModel>EmployeeName}" senderActive="false" icon="sap-icon://employee" iconActive="false" iconDensityAware="false"
+								timestamp="{parts:[{path:'noteModel>Date'},{path:'noteModel>Time'}], formatter:'.formatter.formatFeedTimeStamp'}" text="{noteModel>Text}"
+								info="{i18n>commentsSecTxt}"/>
+						</List>
+						<!--Allow adding elements to the creation view before additional fields section -->
+						<core:ExtensionPoint name="creationMainFieldsExtension"/>
+					</f:content>
+				</f:SimpleForm>
+				<!-- Additional Fields -->
+				<f:SimpleForm id="additionalFieldsSimpleForm" title="{i18n>createFormAddtlDataTitle}" editable="true" layout="ResponsiveGridLayout"
+					labelSpanXL="-1" emptySpanXL="-1" columnsXL="-1" labelSpanL="3" emptySpanL="4" columnsL="1" labelSpanM="3" emptySpanM="4" columnsM="1"
+					labelSpanS="12" emptySpanS="0" adjustLabelSpan="false" singleContainerFullSize="false"
+					visible="{= (${local>/create-AdditionalFields}.length > 0) }">
+					<f:content>
+						<!--filled via the controller Creation.controller.js-->
+					</f:content>
+				</f:SimpleForm>
+				<!-- Attachments -->
+				<UploadCollection id="AttachmentCollection" multiple="false" instantUpload="false" showSeparators="All"
+					uploadButtonInvisible="{formatter:'.formatter.isGroupDisabled', parts: [ { path: 'StartDate' }, { path: 'AbsenceTypeCode' } ]}"
+					change="onAttachmentChange" beforeUploadStarts="onBeforeUploadStarts" terminationEnabled="false" items="{local>/create-attachments}"
+					sameFilenameAllowed="false" visible="{local>/create-attachmentsVisible}">
+					<items>
+						<UploadCollectionItem fileName="{local>FileName}" mimeType="{local>FileType}" url="{local>FileUrl}" uploadedDate="{local>CreaDate}"
+							visibleDelete="true" visibleEdit="false"/>
+					</items>
+					<infoToolbar>
+						<OverflowToolbar class="sapUiSmallMarginTop" design="Transparent" height="30px"
+							visible="{= !( ${local>/create-uploadPercentage} === 0 || ${local>/create-uploadPercentage} >= 100 ) }">
+							<Label text="{i18n>txtUploading}" class="sapUiSmallMarginBottom"/>
+							<ToolbarSpacer/>
+							<ProgressIndicator width="70%" class="sapUiSmallMarginBottom" percentValue="{local>/create-uploadPercentage}" showValue="false" height="1px"
+								state="None"/>
+						</OverflowToolbar>
+					</infoToolbar>
+				</UploadCollection>
+				<VBox renderType="Bare">
+					<MessageStrip id="attachmentText" text="{i18n>oneAttachmentAllowed}" type="Information" showIcon="true"
+						tooltip="{i18n>oneAttachmentAllowed}" class="sapUiTinyMarginTopBottom" visible="{local>/create-singleAttachmentStripVisible}"/>
+					<MessageStrip id="duplicateAttachmentText" text="{i18n>duplicateAttachment}" type="Warning" showIcon="true"
+						tooltip="{i18n>duplicateAttachment}" class="sapUiTinyMarginTopBottom" visible="{local>/create-duplicateAttachmentStripVisible}"/>
+					<MessageStrip id="maxAttachmentText" text="{i18n>maxAttachment}" type="Warning" showIcon="true" tooltip="{i18n>maxAttachment}"
+						class="sapUiTinyMarginTopBottom" visible="{local>/create-maxAttachmentStripVisible}"/>
+				</VBox>
+			</VBox>
+		</semantic:content>
+		<!--Allow adding elements at the end of the creation view -->
+		<core:ExtensionPoint name="creationPageExtension"/>
+		<semantic:messagesIndicator>
+			<semantic:MessagesIndicator press="onHandlePopover"/>
+		</semantic:messagesIndicator>
+		<semantic:saveAction>
+			<semantic:SaveAction id="saveButton"
+				enabled="{formatter:'.formatter.isGroupEnabled', parts: [ { path: 'StartDate' }, { path: 'AbsenceTypeCode' } ]}" press="onSendRequest"/>
+		</semantic:saveAction>
+		<semantic:cancelAction>
+			<semantic:CancelAction id="cancel" press="onCancel"/>
+		</semantic:cancelAction>
+		<core:InvisibleText id="singleDayRadioButtonTxt" text="{i18n>oneDayTxt}"/>
+		<core:InvisibleText id="multiDayRadioButtonTxt" text="{i18n>multiDaysTxt}"/>
+	</semantic:FullscreenPage>
+</mvc:View>
